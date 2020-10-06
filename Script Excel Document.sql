@@ -35,16 +35,14 @@ CREATE TABLE restante(
 
 CREATE TABLE metodos_de_pago(
 	id int not null AUTO_INCREMENT PRIMARY KEY,
-	metodo varchar(50)
+	metodo varchar(50) not null
 );
 
-CREATE TABLE comisiones(
+CREATE TABLE estatus_de_pago(
 	id int not null AUTO_INCREMENT PRIMARY KEY,
-	comision int not null,
-	comisionario_id int not null,
-    
-    FOREIGN KEY (comisionario_id) REFERENCES comisionarios(id)
+	nombre varchar(25) not null
 );
+
 
 CREATE TABLE clientes_frecuentes(
 	id int not null AUTO_INCREMENT PRIMARY KEY,
@@ -57,18 +55,29 @@ CREATE TABLE clientes_frecuentes(
 CREATE TABLE pago(
 	id int not null AUTO_INCREMENT PRIMARY KEY,
 	precio int,
-	id_metodo_pago int not null,
+	id_metodo_pago int,
 	anticipo int,
 	cuenta_por_cobrar int,
     restante int,
 	fecha_de_liquidacion date,
-	pagado boolean,
+	estatus_de_pago int,
 	impuestos int,
 	monto_disponible int,
 	monto_sin_iva int,
 
     FOREIGN KEY (id_metodo_pago) REFERENCES metodos_de_pago(id),
-    FOREIGN KEY (restante) REFERENCES restante(id)
+    FOREIGN KEY (restante) REFERENCES restante(id),
+	FOREIGN KEY (estatus_de_pago) REFERENCES estatus_de_pago(id)
+);
+
+CREATE TABLE comisiones(
+	id int not null AUTO_INCREMENT PRIMARY KEY,
+	comision int not null,
+	comisionario_id int not null,
+	pago_id int not null,
+    
+    FOREIGN KEY (comisionario_id) REFERENCES comisionarios(id),
+	FOREIGN KEY (pago_id) REFERENCES pago(id)
 );
 
 CREATE TABLE folio(
@@ -84,7 +93,6 @@ CREATE TABLE folio(
 	acto_id int not null,
 	comentario varchar(150),
 	pago int not null,
-	comisiones_id int not null,
 	trabajo_dia_o_orden boolean not null,
 
     FOREIGN KEY (codigo_cliente_frecuente) REFERENCES clientes_frecuentes(id),
@@ -92,6 +100,5 @@ CREATE TABLE folio(
     FOREIGN KEY (id_subcliente) REFERENCES subcliente(id),
     FOREIGN KEY (tipo_id) REFERENCES tipo(id),
     FOREIGN KEY (acto_id) REFERENCES acto(id),
-    FOREIGN KEY (pago) REFERENCES pago(id),
-    FOREIGN KEY (comisiones_id) REFERENCES comisiones(id)
+    FOREIGN KEY (pago) REFERENCES pago(id)
 );
