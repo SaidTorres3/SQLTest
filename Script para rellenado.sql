@@ -20,7 +20,8 @@ VALUES -- Precio del servicio, id del metodo de pago, pago anticipado, lo restan
     3500, 1, 3500, 0, "2020/10/02", 1, null, 3500, 3017
 );
 
-INSERT INTO comisiones( -- FUNCIONA
+INSERT INTO comisiones -- FUNCIONA
+( 
  comision, comisionario_id, pago_id
 )
 VALUES( -- Cantidad de comisión, el id del comisionario y el id de pago
@@ -41,34 +42,25 @@ VALUES
 
 -- Opcionales:
 
-INSERT INTO subcliente
+INSERT INTO subcliente -- FUNCIONA
 (
- nombre
+ nombre, id_cliente
 )
 VALUES -- Nombre del sub-cliente, id del cliente
 (
     "Pepe",  1
 );
 
-INSERT INTO clientes_frecuentes
+INSERT INTO clientes_frecuentes -- FUNCIONA
 (
- nombre
+ id_cliente, codigo
 )
 VALUES -- Nombre del cliente
 (
-    "Juanito"
+    1, 1001
 );
 
-INSERT INTO subcliente
-(
- nombre
-)
-VALUES -- Nombre del sub-cliente, id del cliente
-(
-    "Pepe",  1
-);
-
-INSERT INTO restante
+INSERT INTO restante -- FUNCIONA
 (
     pago, restante, id_pago
 )
