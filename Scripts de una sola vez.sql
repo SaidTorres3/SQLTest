@@ -1,6 +1,6 @@
 -- Scripts de una sola vez
 
-INSERT INTO metodos_de_pago
+INSERT INTO metodos_de_pago -- FUNCIONA
 (
  metodo
 )
@@ -15,7 +15,7 @@ VALUES
  "TRANSFERENCIA"
 );
 
-INSERT INTO estatus_de_pago
+INSERT INTO estatus_de_pago -- FUNCIONA
 (
  nombre
 )
@@ -30,7 +30,7 @@ VALUES
  "ANTICIPO"
 );
 
-INSERT INTO tipo
+INSERT INTO tipo -- FUNCIONA
 (
  nombre
 )
@@ -51,43 +51,44 @@ VALUES -- Nombre del tipo de servicio
     "12 - COPIA CERTIFICADA"
 );
 
-INSERT INTO acto
+INSERT INTO actoytipo -- FUNCIONA
 (
- nombre
+ nombre, id_tipo
 )
 VALUES -- Nombre del acto
 (
-    "45 - COPIA CERTIFICADA"
+    "45 - COPIA CERTIFICADA", 1
 ),
 (
-    "53 - DECLARACION TESTIMONIAL"
+    "53 - DECLARACION TESTIMONIAL", 2
 ),
 (
-    "85 - PODER PLEITOS Y COBRANZAS"
+    "85 - PODER PLEITOS Y COBRANZAS", 1
 ),
 (
-    "98 - PROTOCOLIZACION"
+    "98 - PROTOCOLIZACION", 3
 ),
 (
-    "99 - ACTA DE ASAMBLEA (SEGUN LO COMPLEJA)"
+    "99 - ACTA DE ASAMBLEA (SEGUN LO COMPLEJA)", 1
 ),
 (
-    "101 - DOCUMENTOS NACIONALES"
+    "101 - DOCUMENTOS NACIONALES", 5
 ),
 (
-    "117 - TESTAMENTO HEREDOR UNIVERSAL"
+    "117 - TESTAMENTO HEREDOR UNIVERSAL", 5
 ),
 (
-    "128 - INNOMINADO"
+    "128 - INNOMINADO", 5
 ),
 (
-    "129 - OTRO"
+    "129 - OTRO", 4
 ),
 (
-    "45 - COPIA CERTIFICADA"
+    "45 - COPIA CERTIFICADA", 3
 );
 
-INSERT into comisionarios(
+INSERT into comisionarios -- FUNCIONA
+(
     nombre, porcentaje
 )
 VALUES(
