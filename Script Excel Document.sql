@@ -1,69 +1,62 @@
-CREATE TABLE cliente(
+CREATE TABLE cliente( -- FUNCIONA
 	id int not null AUTO_INCREMENT PRIMARY KEY,
 	nombre varchar(150)
 );
 
-CREATE TABLE subcliente(
+CREATE TABLE subcliente( -- FUNCIONA
 	id int not null AUTO_INCREMENT PRIMARY KEY,
+	id_cliente int not null,
 	nombre varchar(150),
-	id_cliente int,
 
     FOREIGN KEY (id_cliente) REFERENCES cliente(id)
 );
 
-CREATE TABLE tipo(
+CREATE TABLE tipo( -- FUNCIONA
 	id int not null AUTO_INCREMENT PRIMARY KEY,
 	nombre varchar(150)
 );
 
-CREATE TABLE acto(
+CREATE TABLE actoytipo( -- FUNCIONA
 	id int not null AUTO_INCREMENT PRIMARY KEY,
-	nombre varchar(150)
+	nombre varchar(150),
+	id_tipo int not null,
+
+	FOREIGN KEY (id_tipo) REFERENCES tipo(id)
 );
 
-CREATE TABLE comisionarios(
+CREATE TABLE comisionarios(  -- FUNCIONA
 	id int not null AUTO_INCREMENT PRIMARY KEY,
 	nombre varchar(150) not null,
 	porcentaje int not null
 );
 
-
-CREATE TABLE metodos_de_pago(
+CREATE TABLE metodos_de_pago( -- FUNCIONA
 	id int not null AUTO_INCREMENT PRIMARY KEY,
 	metodo varchar(50) not null
 );
 
-CREATE TABLE estatus_de_pago(
+CREATE TABLE estatus_de_pago( -- FUNCIONA
 	id int not null AUTO_INCREMENT PRIMARY KEY,
 	nombre varchar(25) not null
 );
 
-
-CREATE TABLE clientes_frecuentes(
-	id int not null AUTO_INCREMENT PRIMARY KEY,
-	id_cliente int not null, 
-	codigo int not null,
-
-    FOREIGN KEY (id_cliente) REFERENCES cliente(id)
-);
-
-CREATE TABLE pago(
+CREATE TABLE pago( -- FUNCIONA
 	id int not null AUTO_INCREMENT PRIMARY KEY,
 	precio int,
 	id_metodo_pago int,
 	anticipo int,
 	cuenta_por_cobrar int,
 	fecha_de_liquidacion date,
-	estatus_de_pago int,
+	id_estatus_de_pago int,
 	impuestos int,
 	monto_disponible int,
 	monto_sin_iva int,
 
     FOREIGN KEY (id_metodo_pago) REFERENCES metodos_de_pago(id),
-	FOREIGN KEY (estatus_de_pago) REFERENCES estatus_de_pago(id)
+	FOREIGN KEY (id_estatus_de_pago) REFERENCES estatus_de_pago(id)
 );
 
-CREATE TABLE restante(
+CREATE TABLE restante( -- FUNCIONA
     id int not null AUTO_INCREMENT PRIMARY KEY,
     pago int not null,
     restante int not null,
@@ -72,35 +65,29 @@ CREATE TABLE restante(
 	FOREIGN KEY (id_pago) REFERENCES pago(id)
 );
 
-CREATE TABLE comisiones(
+CREATE TABLE comisiones( -- FUNCIONA
 	id int not null AUTO_INCREMENT PRIMARY KEY,
 	comision int not null,
 	comisionario_id int not null,
-	pago_id int not null,
+	id_pago int not null,
     
     FOREIGN KEY (comisionario_id) REFERENCES comisionarios(id),
-	FOREIGN KEY (pago_id) REFERENCES pago(id)
+	FOREIGN KEY (id_pago) REFERENCES pago(id)
 );
 
-CREATE TABLE folio(
+CREATE TABLE folio( -- FUNCIONA
 	id int not null AUTO_INCREMENT PRIMARY KEY,
 	folio char(11) not null,
 	fecha_tramite date not null,
 	escritura int,
-	codigo_cliente_frecuente int,
-	id_cliente int not null,
-	id_subcliente int,
+	id_subcliente int not null,
 	cantidad int not null,
-	tipo_id int not null,
-	acto_id int not null,
+	id_actoytipo int not null,
 	comentario varchar(150),
-	pago int not null,
+	id_pago int not null,
 	trabajo_dia_o_orden boolean not null,
 
-    FOREIGN KEY (codigo_cliente_frecuente) REFERENCES clientes_frecuentes(id),
-    FOREIGN KEY (id_cliente) REFERENCES cliente(id),
     FOREIGN KEY (id_subcliente) REFERENCES subcliente(id),
-    FOREIGN KEY (tipo_id) REFERENCES tipo(id),
-    FOREIGN KEY (acto_id) REFERENCES acto(id),
-    FOREIGN KEY (pago) REFERENCES pago(id)
+    FOREIGN KEY (id_actoytipo) REFERENCES actoytipo(id),
+    FOREIGN KEY (id_pago) REFERENCES pago(id)
 );
